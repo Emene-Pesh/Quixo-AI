@@ -19,13 +19,13 @@ Negamax est une simplification de l'algorithme minimax (minmax) qui parcoure les
 Démarrer le server web
 ```html
 
-./server.py 
+python server.py 
 
 ```
 Lancer l'IA
 ```html
 
-./AIGameRunner-master/ai/Quixo.py <port> 
+python QuixoAI.py <port> 
 
 ```
 Se rendre sur  [l'adresse du serveur web](http://127.0.0.1:80)  lancé plutot 
