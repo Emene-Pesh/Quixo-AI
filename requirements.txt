@@ -1,3 +1,2 @@
 easyai
 cherrypy
-Server files link: https://github.com/ECAM-Brussels/AIGameRunner
