@@ -9,7 +9,7 @@ Dans le cadre du cours "projet informatique" à l'ECAM en BAC 2 Science de l'ing
 Celle-ci devait pouvoir affronté d'autre IA ou joueur via une interface web mise à disposition par le professeur(https://github.com/ECAM-Brussels/AIGameRunner)
 ## Algorithme
 
-Notre IA est basé sur un algorithme de min-max avec alpha beta pruning qui parcoure les différentes possibilités de la partie tout en essayant de "maximiser" ou "Minimiser" l'état du jeu. C'est a dire que l'algorithme prend en compte le fait que le joueur adverse est intelligent et a son mot à dire et renvoie a chaque tour le meilleur coup possible
+Nous avons utilisé la librairie EasyAI permettant de mettre en place des IA assez rapidement et facilement. Cette librairie met à disposition plusieurs algorithmes de recherche dont le principal et ainsi celle que nous avons utilisé : Negamax avec alpha beta pruning Negamax est une simplification de l'algorithme minimax (minmax) qui parcoure les différentes possibilités de la partie tout en essayant de "maximiser" ou "Minimiser" l'état du jeu, c'est a dire que l'algorithme prend en compte le fait que le joueur adverse est intelligent et a son mot à dire et renvoie a chaque tour le meilleur coup possible
 
 
 
