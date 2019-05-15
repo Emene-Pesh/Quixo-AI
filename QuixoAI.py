@@ -1,38 +1,15 @@
 import cherrypy
 import sys
 import random
-from board import Board
-from numpy.random import randint
-from ai import getBestMove
-import numpy as np
-import operator
-import pickle
-
-
-class Player:
-    def __init__(self):
-        pass
-
-    # Override this method
-    def playTurn(self,board):
-        pass
-
-class AI_Player(Player):
-    def __init__(self,depthLevels):
-        Player.__init__(self)
-        self.depthLevels = depthLevels
-
-    def playTurn(self,board):
-        move = getBestMove(board,self.depthLevels)
-        board.play(move[0],move[1])
-        return move
+from easyAI import TwoPlayersGame, AI_Player, Negamax,Human_Player
  
  
-class Match(Player):
-    def __init__(self, players, body):
+class Match(TwoPlayersGame):
+    def __init__(self, players, body, indice):
         self.players = players
-        self.nopponent=5
+        self.indice = indice
         self.board = body["game"]
+        self.transform()
         self.nplayer = 1  # player 1 starts.
  
         self.forbidden = {'E': [4, 9, 14, 19, 24], 'W': [0, 5, 10, 15, 20], 'N': [0, 1, 2, 3, 4], 'S': [20, 21, 22, 23, 24]}
@@ -53,14 +30,21 @@ class Match(Player):
  
         self.history = [[0],[0]]
  
- 
+    def transform(self):
+        print(self.board)
+        for i,x in enumerate(self.board):
+            if x != None:
+                self.board[i]= x+1
+            else:
+                self.board[i] = 0
+        print(self.board)
     def possible_moves(self):
  
         dic = {'E': [4, 9, 14, 19, 24], 'W': [0, 5, 10, 15, 20], 'N': [0, 1, 2, 3, 4], 'S': [20, 21, 22, 23, 24]}
  
         indices = [i for i, x in enumerate(self.board) if x == 0] + [i for i, x in
                                                                                enumerate(self.board) if
-                                                                               x == self.nplayer]
+                                                                               x ==self.indice+ 1]
  
         to_remove = [6, 7, 8, 11, 12, 13, 16, 17, 18]
         for i in to_remove:  # enleve les cases du milieux
@@ -83,7 +67,7 @@ class Match(Player):
     def lose(self):
         return any([all([(self.board[c ] == self.nopponent)
                          for c in line])
-                    for line in self.poss])  # diagonal
+                    for line in self.poss]) 
  
     def is_over(self):
         return self.lose()
@@ -105,8 +89,6 @@ class Match(Player):
             self.board[pos] = self.board[pos + self.increments[dir]]
             pos += self.increments[dir]
         self.board[pos] = self.nplayer
-      #  print("move make" + " " + str(self.nplayer) + " "+ move)
-      #  self.show()
  
  
     def unmake_move(self,move):
@@ -128,8 +110,6 @@ class Match(Player):
         del self.history[self.nplayer-1][length-1]
  
  
-    #    print("move unmake" + " "+ str(self.nplayer)+ " "+ move)
-    #    self.show()
  
  
     def show(self):
@@ -137,7 +117,6 @@ class Match(Player):
             ' '.join([['.', 'O', 'X'][self.board[5 * j + i]]
                       for i in range(5)])
             for j in range(5)]))
-        print(self.possible_moves())
  
  
  
@@ -153,29 +132,23 @@ class Server:
         if cherrypy.request.method == "OPTIONS":
             return ''
  
-        body = cherrypy.request.json
-        game=[]
-        print(body)
-        for x in body['game']:
-            if x== None:
-                game.append(0)
-            else:
-                game.append(x+1)
-
-        ind = body['players'].index(body['you'])
-        brd =Board(game,ind+1)
-        a=AI_Player([(4,0), (3,22), (2,28), (1,35)]).playTurn(brd)
-        dire =['E','S','W','N']
-
-        
-        return {"move":{"cube":(int(a[0][0])*5)+int(a[0][1]) ,"direction":dire[int(a[1])]},"message": "Je suis nul, acheve moi"}
-
+        self.body = cherrypy.request.json
+        if self.body["players"][0] == self.body["you"]:
+            self.couleur = 0
+        else:
+            self.couleur = 1
+        match = Match([AI_Player(Negamax(4)),Human_Player()], self.body, self.couleur)
+        nextMove = match.get_move()
+        a = nextMove.split()
+ 
+        return {"move": {"cube": int(a[0]),
+                         "direction": a[1]}} 
  
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     else:
-        port = 8085
+        port = 8081
  
-    cherrypy.config.update({'server.socket_host': '0.0.0.0', 'server.socket_port': port})
+    cherrypy.config.update({'server.socket_port': port})
     cherrypy.quickstart(Server())
