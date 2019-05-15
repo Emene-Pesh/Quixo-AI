@@ -1,2 +1,2 @@
-easyai
+numpy
 cherrypy
