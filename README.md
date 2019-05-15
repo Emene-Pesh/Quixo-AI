@@ -6,7 +6,7 @@ ___
 # Projet IA Quixo
 
 Dans le cadre du cours "projet informatique" à l'ECAM en BAC 2 Science de l'ingénieur industriel, nous avons dû réalisé une intelligence artificielle pour le jeu "QUIXO"
-Celle-ci devait pouvoir affronté d'autre IA ou joueur via une interface web mise à disposition par le professeur
+Celle-ci devait pouvoir affronté d'autre IA ou joueur via une interface web mise à disposition par le professeur(https://github.com/ECAM-Brussels/AIGameRunner)
 ## Algorithme
 
 Nous avons utilisé la librairie [EasyAI](https://zulko.github.io/easyAI/) permettant de mettre en place des IA assez rapidement et facilement.
