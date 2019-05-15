@@ -28,7 +28,7 @@ Lancer l'IA
 ./AIGameRunner-master/ai/Quixo.py <port> 
 
 ```
-Se rendre sur  [l'adresse sur serveur web](http://127.0.0.1:80)  lancé plutot 
+Se rendre sur  [l'adresse du serveur web](http://127.0.0.1:80)  lancé plutot 
 
 
 ![alt text](https://i.ibb.co/swDnC5K/server.png)
@@ -39,5 +39,5 @@ clicker sur "Add participant" pour chaque joueur (IA) ensuite de clicker sur le 
 
 
 
-*Vous pouvez lancer 2 fois la même IA pour pouvoir l'observé s'affronté elle même localement. Mais il est necessaire de créer un nouveau fichier python contenant l'IA*
+*Vous pouvez lancer 2 fois la même IA pour pouvoir l'observé s'affronté elle même localement.*
 
