@@ -140,7 +140,7 @@ class Server:
         a = nextMove.split()
  
         return {"move": {"cube": int(a[0]),
-                         "direction": a[1]}}  # Trouver algorithme #Nique la police #Les poulets faut les fumer
+                         "direction": a[1]}}
  
 if __name__ == "__main__":
     if len(sys.argv) > 1:
