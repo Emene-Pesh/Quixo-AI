@@ -7,8 +7,7 @@ from easyAI import TwoPlayersGame, AI_Player, Negamax,Human_Player
 class Match(TwoPlayersGame):
     def __init__(self, players, body, indice):
         self.players = players
-        self.indice =indice
- 
+        self.indice = indice
         self.board = body["game"]
         self.transform()
         self.nplayer = 1  # player 1 starts.
@@ -32,31 +31,32 @@ class Match(TwoPlayersGame):
         self.history = [[0],[0]]
  
     def transform(self):
+        print(self.board)
         for i,x in enumerate(self.board):
             if x != None:
                 self.board[i]= x+1
             else:
                 self.board[i] = 0
+        print(self.board)
     def possible_moves(self):
  
         dic = {'E': [4, 9, 14, 19, 24], 'W': [0, 5, 10, 15, 20], 'N': [0, 1, 2, 3, 4], 'S': [20, 21, 22, 23, 24]}
  
         indices = [i for i, x in enumerate(self.board) if x == 0] + [i for i, x in
                                                                                enumerate(self.board) if
-                                                                               x == self.indice+1]
+                                                                               x ==self.indice+ 1]
  
         to_remove = [6, 7, 8, 11, 12, 13, 16, 17, 18]
         for i in to_remove:  # enleve les cases du milieux
             if i in indices:
                 indices.remove(i)
         G = ['W', 'E','S', 'N' ]
-        random.shuffle(G)
         possibleMov = []
         for dir in G:
             for elem in indices:
                 if elem not in dic[dir]:
                     possibleMov.append(str(elem) + " "+ dir)
-        random.shuffle(possibleMov)
+ 
         return  possibleMov
  
     def scoring(self):
@@ -67,7 +67,7 @@ class Match(TwoPlayersGame):
     def lose(self):
         return any([all([(self.board[c ] == self.nopponent)
                          for c in line])
-                    for line in self.poss])  # diagonal
+                    for line in self.poss]) 
  
     def is_over(self):
         return self.lose()
@@ -110,6 +110,8 @@ class Match(TwoPlayersGame):
         del self.history[self.nplayer-1][length-1]
  
  
+ 
+ 
     def show(self):
         print('\n' + '\n'.join([
             ' '.join([['.', 'O', 'X'][self.board[5 * j + i]]
@@ -140,7 +142,7 @@ class Server:
         a = nextMove.split()
  
         return {"move": {"cube": int(a[0]),
-                         "direction": a[1]}}  # Trouver algorithme #Nique la police #Les poulets faut les fumer
+                         "direction": a[1]}} 
  
 if __name__ == "__main__":
     if len(sys.argv) > 1:
